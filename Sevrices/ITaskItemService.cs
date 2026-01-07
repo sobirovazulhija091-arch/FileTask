@@ -5,4 +5,8 @@ public interface ITaskItemService
     public Task<Response<string>> DeleteAsync(int taskitemid);   
     public Task<Response<TaskItem?>> GetTaskItemByIdAsync(int taskitemid);
     public Task<List<TaskItem>> GetTaskItemsAsync();
+    public Task<Response<TaskItem?>> GetTasksByTitleAsync(int taskitemid);
+    public Task<Response<string>> UpdatedesAsync(int taskitemid, string newdes);
+
+
 }

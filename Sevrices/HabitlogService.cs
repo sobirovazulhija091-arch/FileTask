@@ -13,11 +13,11 @@ public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
            try
        {
            using var conn =context.Connection();
-           var query="insert into habitlogs(date,isCompleted) values(@date,@isCompleted)";
-            var res = await conn.ExecuteAsync(query ,new{date=habitlog.Date,isCompleted=habitlog.IsCompleted});
+           var query="insert into habitlogs(habitId, isCompleted) values(@HabitId,@IsCompleted)";
+            var res = await conn.ExecuteAsync(query ,new{habitid=habitlog.HabitId,isCompleted=habitlog.IsCompleted});
              return res==0
-             ? new Response<string>(HttpStatusCode.InternalServerError,"Can not add Task")
-             : new Response<string>(HttpStatusCode.OK,"Task successfully added!");
+             ? new Response<string>(HttpStatusCode.InternalServerError,"Can not add habitlog")
+             : new Response<string>(HttpStatusCode.OK,"habitlog successfully added!");
        }
        catch (System.Exception ex)
        {
@@ -30,11 +30,11 @@ public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
            try
          {
               using var conn=context.Connection();
-              var update="update habitlogs set date=@date,isCompleted=@isCompleted where id=@Id";
+              var update="update habitlogs set isCompleted=@isCompleted where id=@Id";
               var res =await conn.ExecuteAsync(update, habitlog);
                 return res==0
-             ? new Response<string>(HttpStatusCode.InternalServerError,"Can not update Task")
-             : new Response<string>(HttpStatusCode.OK,"Task successfully update");
+             ? new Response<string>(HttpStatusCode.InternalServerError,"Can not update habitlog")
+             : new Response<string>(HttpStatusCode.OK,"Habitlog successfully update");
          }
          catch (System.Exception ex)
          {
@@ -50,8 +50,8 @@ public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
              var delete ="delete from habitlogs where id=@Id";
              var res = await conn.ExecuteAsync(delete,new{Id=habitlogid});
              return res==0
-             ? new Response<string>(HttpStatusCode.NotFound,"Can not delete task")
-             : new Response<string>(HttpStatusCode.OK,"Task deleted  successfully!");
+             ? new Response<string>(HttpStatusCode.NotFound,"Can not delete habitlog")
+             : new Response<string>(HttpStatusCode.OK,"Habitlog deleted  successfully!");
             }
             catch (System.Exception ex)
             {
@@ -67,8 +67,8 @@ public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
                var query="select * from habitlogs where id=@Id";
                var habitlog= await conn.QueryFirstOrDefaultAsync<HabitLog>(query,new{Id=habitlogid});
                  return habitlog==null
-                  ? new Response<HabitLog?>(HttpStatusCode.NotFound,"Company not found !")
-                  : new Response<HabitLog?>(HttpStatusCode.OK, "Company  found !", habitlog);
+                  ? new Response<HabitLog?>(HttpStatusCode.NotFound,"Habitlog not found !")
+                  : new Response<HabitLog?>(HttpStatusCode.OK, "Habitlog  found !", habitlog);
           }
           catch (System.Exception ex)
           {
@@ -83,5 +83,11 @@ public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
              var res =await conn.QueryAsync<HabitLog>(select);
              return res.ToList();
       }
+       public async Task<int> CountCompletedLogsAsync(int habitId)
+    {
+        using var conn = context.Connection();
+        var query = "SELECT COUNT(*) FROM habitlogs WHERE habitId = @HabitId AND isCompleted = true";
+        return await conn.ExecuteScalarAsync<int>(query, new { HabitId = habitId });
+    }
 }
 

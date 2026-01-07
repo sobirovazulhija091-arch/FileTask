@@ -8,7 +8,7 @@ public class HabitController(IHabitService habitService):ControllerBase
 {
     private readonly  IHabitService _habitService=habitService;
     [HttpPost]
-     public async Task<Response<string>> AddHabitlogAsync(Habit habit)
+     public async Task<Response<string>> AddHabitAsync(Habit habit)
     {
         return await _habitService.AddHabitAsync(habit);
     }
@@ -28,8 +28,18 @@ public class HabitController(IHabitService habitService):ControllerBase
         return await _habitService.GetHabitAsync();
     }
     [HttpGet("{habitid:int}")]
-      public async Task<Response<Habit?>> GetHabitById(int habitid)
+      public async Task<Response<Habit?>> GetHabitByIdAsync(int habitid)
     {
          return await _habitService.GetHabitByIdAsync(habitid);
     }
+    [HttpGet("count")]
+       public async Task<int> GetCountOfhabitsAsync()
+  {
+        return await _habitService.GetCountOfhabitsAsync();
+  }
+   [HttpPut("{habitid:int}/name/{newname}")]
+   public async  Task<Response<string>> UpdateHabitNameAsync(int habitid , string newname)
+  {
+      return await _habitService.UpdateHabitNameAsync(habitid,newname);
+  }
 }

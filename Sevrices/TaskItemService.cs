@@ -10,10 +10,9 @@ public class TaskItemService(ApplicationDbContext dbContext) : ITaskItemService
         try
         {
              using var conn=context.Connection();
-             var insert = @"insert into taskitems(title,description,isCompleted,dueDate,createdAt)
-             values(@title,@description,@iscompleted,@duedate,createdat)";
-             var res = await conn.ExecuteAsync(insert,new{title=taskItem.Title,description=taskItem.Description,iscompleted=taskItem.IsCompleted,
-             duedate=taskItem.DueDate,createda=taskItem.CreatedAt});
+             var insert = @"insert into taskitems(title,description,isCompleted)
+             values(@title,@description,@iscompleted)";
+             var res = await conn.ExecuteAsync(insert,new{title=taskItem.Title,description=taskItem.Description,iscompleted=taskItem.IsCompleted,});
              return res==0
              ? new Response<string>(HttpStatusCode.InternalServerError,"Can not add Task")
              : new Response<string>(HttpStatusCode.OK,"Task successfully added!");
@@ -78,7 +77,7 @@ public class TaskItemService(ApplicationDbContext dbContext) : ITaskItemService
          try
          {
               using var conn=context.Connection();
-              var update="update taskitems set title=@New, description=@Newdes where id=@Id";
+              var update="update taskitems set title=@Title, description=@Description where id=@Id";
               var res =await conn.ExecuteAsync(update, taskItem);
                 return res==0
              ? new Response<string>(HttpStatusCode.InternalServerError,"Can not update Task")
@@ -92,4 +91,39 @@ public class TaskItemService(ApplicationDbContext dbContext) : ITaskItemService
 
          }
     }
-}
+      public async Task<Response<TaskItem?>> GetTasksByTitleAsync(int taskitemid)
+     {
+           try
+          {
+               using var conn=context.Connection();
+               var query="select title from taskitems where id=@Id";
+               var selectByid= await conn.QueryFirstOrDefaultAsync<TaskItem>(query,new{Id=taskitemid});
+                 return selectByid==null
+                  ? new Response<TaskItem?>(HttpStatusCode.NotFound,"Company not found !")
+                  : new Response<TaskItem?>(HttpStatusCode.OK, "Company  found !", selectByid);
+          }
+          catch (System.Exception ex)
+          {
+             Console.WriteLine(ex);
+             return new Response<TaskItem?>(HttpStatusCode.InternalServerError,"Internal Server Error");
+          }
+     }
+    public async Task<Response<string>> UpdatedesAsync(int taskitemid,string newdes)
+     {
+          try
+          {
+                using var conn= context.Connection();
+                var query="update taskitems set description=@Newdes where id=@Id";
+                 var res = await conn.ExecuteAsync(query,new{Newdes=newdes,Id=taskitemid});
+           return res==0
+             ? new Response<string>(HttpStatusCode.NotFound,"Can not update task")
+             : new Response<string>(HttpStatusCode.OK,"Task update  successfully!");
+            }
+            catch (System.Exception ex)
+            {
+                 Console.WriteLine(ex);
+                 return new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error");
+            }
+     }
+     }
+     
