@@ -1,34 +1,35 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using System.Net;
+using System.Threading.Tasks;
 [ApiController]
 [Route("api/[controller]")]
 public class HabitController(IHabitService habitService):ControllerBase
 {
     private readonly  IHabitService _habitService=habitService;
     [HttpPost]
-     public Response<string> AddHabitlog(Habit habit)
+     public async Task<Response<string>> AddHabitlogAsync(Habit habit)
     {
-        return _habitService.AddHabit(habit);
+        return await _habitService.AddHabitAsync(habit);
     }
     [HttpDelete("{habitid:int}")]
-      public Response<string> DeleteHabit(int habitid)
+      public async Task<Response<string>> DeleteHabitAsync(int habitid)
     {
-         return _habitService.DeleteHabit(habitid);
+         return await _habitService.DeleteHabitAsync(habitid);
     }
     [HttpPut]
-    public Response<string> UpdateHabit(Habit habit)
+    public async Task<Response<string>> UpdateHabitAsync(Habit habit)
     {
-        return _habitService.UpdateHabit(habit);
+        return await _habitService.UpdateHabitAsync(habit);
     }
     [HttpGet]
-   public List<Habit> GetHabit()
+   public async Task<List<Habit>> GetHabitAsync()
     {
-        return _habitService.GetHabit();
+        return await _habitService.GetHabitAsync();
     }
     [HttpGet("{habitid:int}")]
-      public Response<Habit?> GetHabitById(int habitid)
+      public async Task<Response<Habit?>> GetHabitById(int habitid)
     {
-         return _habitService.GetHabitById(habitid);
+         return await _habitService.GetHabitByIdAsync(habitid);
     }
 }

@@ -10,28 +10,28 @@ public class HabitlogController(IHabitlogService habitlogService):ControllerBase
 {
     private readonly  IHabitlogService _habitlogService=habitlogService;
     [HttpPost]
-     public Response<string> AddHabitlog(HabitLog habitlog)
+     public async Task<Response<string>> AddHabitlogAsync(HabitLog habitlog)
     {
-        return _habitlogService.AddHabitlog(habitlog);
+        return await _habitlogService.AddHabitlogAsync(habitlog);
     }
     [HttpDelete("{habitlogid:int}")]
-      public Response<string> DeleteHabitlog(int habitlogid)
+      public async Task<Response<string>> DeleteHabitlogAsync(int habitlogid)
     {
-         return _habitlogService.DeleteHabitlog(habitlogid);
+         return  await _habitlogService.DeleteHabitlogAsync(habitlogid);
     }
     [HttpPut]
-    public Response<string> UpdateHabitlog(HabitLog habitlog)
+    public async Task<Response<string>> UpdateHabitlogAsync(HabitLog habitlog)
     {
-        return _habitlogService.UpdateHabitlog(habitlog);
+        return await _habitlogService.UpdateHabitlogAsync(habitlog);
     }
     [HttpGet]
-   public List<HabitLog> GetHabitlog()
+   public async Task<List<HabitLog>> GetHabitlogAsync()
     {
-        return _habitlogService.GetHabitlog();
+        return await _habitlogService.GetHabitlogAsync();
     }
     [HttpGet("{habitlogid:int}")]
-      public Response<HabitLog?> GetHabitByIdlog(int habitlogid)
+      public async Task<Response<HabitLog?>> GetHabitByIdlogAsync(int habitlogid)
     {
-         return _habitlogService.GetHabitByIdlog(habitlogid);
+         return await _habitlogService.GetHabitByIdlogAsync(habitlogid);
     }
 }

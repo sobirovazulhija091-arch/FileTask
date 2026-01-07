@@ -7,28 +7,28 @@ public class TaskItemController(ITaskItemService taskItemService):ControllerBase
 {
     private readonly  ITaskItemService _taskItemService=taskItemService;
     [HttpPost]
-     public Response<string> Add(TaskItem taskItem)
+     public async Task<Response<string>> AddAsync(TaskItem taskItem)
     {
-        return _taskItemService.Add(taskItem);
+        return await _taskItemService.AddAsync(taskItem);
     }
     [HttpDelete("{taskitemid:int}")]
-      public Response<string> Delete(int taskitemid)
+      public async Task<Response<string>> DeleteAsync(int taskitemid)
     {
-         return _taskItemService.Delete(taskitemid);
+         return  await _taskItemService.DeleteAsync(taskitemid);
     }
     [HttpPut]
-    public Response<string> Update(TaskItem taskItem)
+    public async Task<Response<string>> UpdateAsync(TaskItem taskItem)
     {
-        return _taskItemService.Update(taskItem);
+        return  await _taskItemService.UpdateAsync(taskItem);
     }
     [HttpGet]
-   public List<TaskItem> GetTaskItems()
+   public async Task<List<TaskItem>> GetTaskItems()
     {
-        return _taskItemService.GetTaskItems();
+        return await _taskItemService.GetTaskItemsAsync();
     }
     [HttpGet("{taskitemid:int}")]
-      public Response<TaskItem?> GetTaskItemById(int taskitemid)
+      public async Task<Response<TaskItem?>> GetTaskItemByIdAsync(int taskitemid)
     {
-         return _taskItemService.GetTaskItemById(taskitemid);
+         return  await _taskItemService.GetTaskItemByIdAsync(taskitemid);
     }
 }

@@ -1,8 +1,8 @@
 public interface IHabitService
 {
-      public Response<string> AddHabit(Habit habit);
-      public Response<string> UpdateHabit(Habit habit);
-      public Response<string> DeleteHabit(int habitid);
-      public Response<Habit?> GetHabitById(int habitid);
-      public List<Habit> GetHabit();
+      public Task<Response<string>> AddHabitAsync(Habit habit);
+      public Task<Response<string>> UpdateHabitAsync(Habit habit);
+      public Task<Response<string>> DeleteHabitAsync(int habitid);
+      public Task<Response<Habit?>> GetHabitByIdAsync(int habitid);
+      public Task<List<Habit>> GetHabitAsync();
 }

@@ -1,8 +1,8 @@
 public interface ITaskItemService
 {
-    public Response<string> Add(TaskItem taskItem);
-    public Response<string> Update(TaskItem taskItem);
-    public Response<string> Delete(int taskitemid);   
-    public Response<TaskItem?> GetTaskItemById(int taskitemid);
-    public List<TaskItem> GetTaskItems();
+    public Task<Response<string>> AddAsync(TaskItem taskItem);
+    public Task<Response<string>> UpdateAsync(TaskItem taskItem);
+    public Task<Response<string>> DeleteAsync(int taskitemid);   
+    public Task<Response<TaskItem?>> GetTaskItemByIdAsync(int taskitemid);
+    public Task<List<TaskItem>> GetTaskItemsAsync();
 }

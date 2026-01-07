@@ -1,9 +1,9 @@
 namespace WebTask.Services;
 public interface IHabitlogService
 {
-      public Response<string> AddHabitlog(HabitLog habitlog);
-      public Response<string> UpdateHabitlog(HabitLog habitlog);
-      public Response<string> DeleteHabitlog(int habitlogid);
-      public Response<HabitLog?> GetHabitByIdlog(int habitlogid);
-      public List<HabitLog> GetHabitlog();
+      public Task<Response<string>> AddHabitlogAsync(HabitLog habitlog);
+      public Task<Response<string>> UpdateHabitlogAsync(HabitLog habitlog);
+      public Task<Response<string>> DeleteHabitlogAsync(int habitlogid);
+      public Task<Response<HabitLog?>> GetHabitByIdlogAsync(int habitlogid);
+      public Task<List<HabitLog>> GetHabitlogAsync();
 }
