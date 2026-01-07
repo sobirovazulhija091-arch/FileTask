@@ -91,30 +91,14 @@ public class TaskItemService(ApplicationDbContext dbContext) : ITaskItemService
 
          }
     }
-      public async Task<Response<TaskItem?>> GetTasksByTitleAsync(int taskitemid)
-     {
-           try
-          {
-               using var conn=context.Connection();
-               var query="select title from taskitems where id=@Id";
-               var selectByid= await conn.QueryFirstOrDefaultAsync<TaskItem>(query,new{Id=taskitemid});
-                 return selectByid==null
-                  ? new Response<TaskItem?>(HttpStatusCode.NotFound,"Company not found !")
-                  : new Response<TaskItem?>(HttpStatusCode.OK, "Company  found !", selectByid);
-          }
-          catch (System.Exception ex)
-          {
-             Console.WriteLine(ex);
-             return new Response<TaskItem?>(HttpStatusCode.InternalServerError,"Internal Server Error");
-          }
-     }
-    public async Task<Response<string>> UpdatedesAsync(int taskitemid,string newdes)
+
+    public async Task<Response<string>> UpdateDescriptionAsync(int taskitemid, string newDescription)
      {
           try
           {
                 using var conn= context.Connection();
                 var query="update taskitems set description=@Newdes where id=@Id";
-                 var res = await conn.ExecuteAsync(query,new{Newdes=newdes,Id=taskitemid});
+                 var res = await conn.ExecuteAsync(query,new{Newdes=newDescription,Id=taskitemid});
            return res==0
              ? new Response<string>(HttpStatusCode.NotFound,"Can not update task")
              : new Response<string>(HttpStatusCode.OK,"Task update  successfully!");

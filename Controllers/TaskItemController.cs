@@ -31,14 +31,10 @@ public class TaskItemController(ITaskItemService taskItemService):ControllerBase
     {
          return  await _taskItemService.GetTaskItemByIdAsync(taskitemid);
     }
-     [HttpGet]
-     public async Task<Response<TaskItem?>> GetTasksByTitleAsync(int taskitemid)
-     {
-         return await _taskItemService.GetTasksByTitleAsync(taskitemid );
-     }
-   [HttpPut("{taskitemid:int}/title/{newdes}")]
-     public async Task<Response<string>> UpdatedesAsync(int taskitemid,string newdes)
-  {
-     return await _taskItemService.UpdatedesAsync(taskitemid,newdes);
-  }
+  
+   [HttpPut("{taskitemid}/name/{newDescription}")]
+public async Task<Response<string>> UpdateDescriptionAsync(int taskitemid, string newDescription)
+{
+    return await _taskItemService.UpdateDescriptionAsync(taskitemid, newDescription);
+}
 }
