@@ -35,3 +35,4 @@ C:\Users\Azik\Desktop\Task\WebTask\obj\Debug\net9.0\refint\WebTask.dll
 C:\Users\Azik\Desktop\Task\WebTask\obj\Debug\net9.0\WebTask.pdb
 C:\Users\Azik\Desktop\Task\WebTask\obj\Debug\net9.0\WebTask.genruntimeconfig.cache
 C:\Users\Azik\Desktop\Task\WebTask\obj\Debug\net9.0\ref\WebTask.dll
+C:\Users\Azik\Desktop\Task\WebTask\obj\Debug\net9.0\WebTask.sourcelink.json

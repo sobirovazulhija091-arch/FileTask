@@ -8,8 +8,8 @@ public class HabitService(ApplicationDbContext dbContext) : IHabitService
        try
        {
            using var conn =context.Connection();
-           var query="insert into habits(name,frequency,createdAt,isActive) values(@name,@frequency,@createdAt,@isActive)";
-            var res = await conn.ExecuteAsync(query ,new{name=habit.Name,frequency=habit.Frequency,createdAt=habit.CreatedAt,isActive=habit.IsActive});
+           var query="insert into habits(name,frequency,isActive) values(@name,@frequency,@isActive)";
+            var res = await conn.ExecuteAsync(query ,new{name=habit.Name,frequency=habit.Frequency,isActive=habit.IsActive});
              return res==0
              ? new Response<string>(HttpStatusCode.InternalServerError,"Can not add Task")
              : new Response<string>(HttpStatusCode.OK,"Task successfully added!");
@@ -29,8 +29,8 @@ public class HabitService(ApplicationDbContext dbContext) : IHabitService
              var delete ="delete from habits where id=@Id";
              var res = await conn.ExecuteAsync(delete,new{Id=habitid});
              return res==0
-             ? new Response<string>(HttpStatusCode.InternalServerError,"Can not delete task")
-             : new Response<string>(HttpStatusCode.InternalServerError,"Task deleted  successfully!");
+             ? new Response<string>(HttpStatusCode.NotFound,"Can not delete task")
+             : new Response<string>(HttpStatusCode.OK,"Task deleted  successfully!");
             }
             catch (System.Exception ex)
             {
@@ -47,8 +47,8 @@ public class HabitService(ApplicationDbContext dbContext) : IHabitService
                var query="select * from habits where id=@Id";
                var habit= await conn.QueryFirstOrDefaultAsync<Habit>(query,new{Id=habitid});
                  return habit==null
-                  ? new Response<Habit?>(HttpStatusCode.InternalServerError,"Company not found !")
-                  : new Response<Habit?>(HttpStatusCode.InternalServerError, "Company  found !", habit);
+                  ? new Response<Habit?>(HttpStatusCode.NotFound,"Company not found !")
+                  : new Response<Habit?>(HttpStatusCode.OK, "Company  found !", habit);
           }
           catch (System.Exception ex)
           {
@@ -62,7 +62,7 @@ public class HabitService(ApplicationDbContext dbContext) : IHabitService
          try
          {
               using var conn=context.Connection();
-              var update="update habits set name=@name,frequency=@frequency,createdAt=@createdA,isActive=@isActive where id=@Id";
+              var update="update habits set name=@Name,frequency=@Frequency,isActive=@IsActive where id=@Id";
               var res =await conn.ExecuteAsync(update, habit);
                 return res==0
              ? new Response<string>(HttpStatusCode.InternalServerError,"Can not update Task")

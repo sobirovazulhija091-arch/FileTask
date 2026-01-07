@@ -37,8 +37,8 @@ public class TaskItemService(ApplicationDbContext dbContext) : ITaskItemService
              var delete ="delete from taskitems where id=@Id";
              var res = await conn.ExecuteAsync(delete,new{Id=taskitemid});
              return res==0
-             ? new Response<string>(HttpStatusCode.InternalServerError,"Can not delete task")
-             : new Response<string>(HttpStatusCode.InternalServerError,"Task deleted  successfully!");
+             ? new Response<string>(HttpStatusCode.NotFound,"Can not delete task")
+             : new Response<string>(HttpStatusCode.OK,"Task deleted  successfully!");
             }
             catch (System.Exception ex)
             {
@@ -55,8 +55,8 @@ public class TaskItemService(ApplicationDbContext dbContext) : ITaskItemService
                var query="select * from taskitems where id=@Id";
                var selectByid= await conn.QueryFirstOrDefaultAsync<TaskItem>(query,new{Id=taskitemid});
                  return selectByid==null
-                  ? new Response<TaskItem?>(HttpStatusCode.InternalServerError,"Company not found !")
-                  : new Response<TaskItem?>(HttpStatusCode.InternalServerError, "Company  found !", selectByid);
+                  ? new Response<TaskItem?>(HttpStatusCode.NotFound,"Company not found !")
+                  : new Response<TaskItem?>(HttpStatusCode.OK, "Company  found !", selectByid);
           }
           catch (System.Exception ex)
           {

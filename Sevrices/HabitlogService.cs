@@ -50,8 +50,8 @@ public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
              var delete ="delete from habitlogs where id=@Id";
              var res = await conn.ExecuteAsync(delete,new{Id=habitlogid});
              return res==0
-             ? new Response<string>(HttpStatusCode.InternalServerError,"Can not delete task")
-             : new Response<string>(HttpStatusCode.InternalServerError,"Task deleted  successfully!");
+             ? new Response<string>(HttpStatusCode.NotFound,"Can not delete task")
+             : new Response<string>(HttpStatusCode.OK,"Task deleted  successfully!");
             }
             catch (System.Exception ex)
             {
@@ -67,8 +67,8 @@ public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
                var query="select * from habitlogs where id=@Id";
                var habitlog= await conn.QueryFirstOrDefaultAsync<HabitLog>(query,new{Id=habitlogid});
                  return habitlog==null
-                  ? new Response<HabitLog?>(HttpStatusCode.InternalServerError,"Company not found !")
-                  : new Response<HabitLog?>(HttpStatusCode.InternalServerError, "Company  found !", habitlog);
+                  ? new Response<HabitLog?>(HttpStatusCode.NotFound,"Company not found !")
+                  : new Response<HabitLog?>(HttpStatusCode.OK, "Company  found !", habitlog);
           }
           catch (System.Exception ex)
           {
