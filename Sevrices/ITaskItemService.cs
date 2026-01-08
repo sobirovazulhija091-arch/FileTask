@@ -7,4 +7,5 @@ public interface ITaskItemService
     public Task<List<TaskItem>> GetTaskItemsAsync();
     public  Task<Response<string>> UpdateDescriptionAsync(int taskitemid, string newDescription);
     public  Task<Response<string>>  UpdateAsTitleAsync(int taskitemid ,bool iscompleted);
+     public Task<int> CountTask();
 }

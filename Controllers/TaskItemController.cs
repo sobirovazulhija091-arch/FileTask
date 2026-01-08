@@ -38,8 +38,14 @@ public async Task<Response<string>> UpdateDescriptionAsync(int taskitemid, strin
     return await _taskItemService.UpdateDescriptionAsync(taskitemid, newDescription);
 }
 [HttpPut("{taskitemid:int}/.../{iscompleted:bool}")]
- public async Task<Response<string>>  UpdateAsTitleAsync(int taskitemid  ,bool iscompleted)
+ public async Task<Response<string>> UpdateAsTitleAsync(int taskitemid  ,bool iscompleted)
     {
         return await _taskItemService.UpdateAsTitleAsync(taskitemid,iscompleted);
     }
+       [HttpGet("count")]
+      public async Task<int> CountTask()
+    {
+        return await _taskItemService.CountTask();
+    }
+
 }

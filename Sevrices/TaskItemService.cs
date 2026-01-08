@@ -126,5 +126,12 @@ public class TaskItemService(ApplicationDbContext dbContext) : ITaskItemService
                  return new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error");
             }
      }
+       public async Task<int> CountTask()
+     {
+           using var conn = context.Connection();
+           var query="select count(*) from taskitems";
+           var count=await conn.ExecuteScalarAsync<int>(query);
+           return count;
+     }
      }
      
