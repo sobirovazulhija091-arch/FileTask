@@ -88,5 +88,12 @@ public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
         var query = "SELECT COUNT(*) FROM habitlogs WHERE habitId = @HabitId AND isCompleted = true";
         return await conn.ExecuteScalarAsync<int>(query, new { HabitId = habitId });
     }
+    public  async Task<int> CountCompletedTrueOrFalseLogsAsync(bool iscompleted)
+    {
+         using var conn = context.Connection();
+        var query = "SELECT COUNT(*) FROM habitlogs WHERE isCompleted = @Iscompleted";
+        return await conn.ExecuteScalarAsync<int>(query, new {Iscompleted=iscompleted});
+    }
+    
 }
 

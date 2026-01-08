@@ -37,4 +37,9 @@ public async Task<Response<string>> UpdateDescriptionAsync(int taskitemid, strin
 {
     return await _taskItemService.UpdateDescriptionAsync(taskitemid, newDescription);
 }
+[HttpPut("{taskitemid:int}/.../{iscompleted:bool}")]
+ public async Task<Response<string>>  UpdateAsTitleAsync(int taskitemid  ,bool iscompleted)
+    {
+        return await _taskItemService.UpdateAsTitleAsync(taskitemid,iscompleted);
+    }
 }

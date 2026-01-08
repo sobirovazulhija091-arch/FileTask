@@ -108,4 +108,5 @@ public class HabitService(ApplicationDbContext dbContext) : IHabitService
                  return new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error");
             }
      }
-     }
+     
+}

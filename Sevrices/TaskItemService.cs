@@ -109,5 +109,22 @@ public class TaskItemService(ApplicationDbContext dbContext) : ITaskItemService
                  return new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error");
             }
      }
+    public async Task<Response<string>>  UpdateAsTitleAsync(int taskitemid ,bool iscompleted)
+     {
+           try
+          {
+                using var conn= context.Connection();
+                var query="update taskitems set  isCompleted=@Iscompleted where id=@Id";
+                 var res = await conn.ExecuteAsync(query,new{Iscompleted=iscompleted,Id=taskitemid});
+           return res==0
+             ? new Response<string>(HttpStatusCode.NotFound,"Can not found update task")
+             : new Response<string>(HttpStatusCode.OK,"Task update  successfully!");
+            }
+            catch (System.Exception ex)
+            {
+                 Console.WriteLine(ex);
+                 return new Response<string>(HttpStatusCode.InternalServerError,"Internal Server Error");
+            }
+     }
      }
      

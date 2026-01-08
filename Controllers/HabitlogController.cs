@@ -34,9 +34,14 @@ public class HabitlogController(IHabitlogService habitlogService):ControllerBase
     {
          return await _habitlogService.GetHabitByIdlogAsync(habitlogid);
     }
-    [HttpGet("conut")]
+    [HttpGet("conutbyid")]
      public async Task<int> CountCompletedLogsAsync(int habitId)
     {
          return await _habitlogService.CountCompletedLogsAsync(habitId);
     }
+    [HttpGet("conut completed")]
+    public  async Task<int> CountCompletedTrueOrFalseLogsAsync(bool iscompleted)
+  {
+    return await _habitlogService.CountCompletedTrueOrFalseLogsAsync(iscompleted);
+  }
 }

@@ -6,5 +6,6 @@ public interface IHabitService
       public Task<Response<Habit?>> GetHabitByIdAsync(int habitid);
       public Task<List<Habit>> GetHabitAsync();
       public Task<int> GetCountOfhabitsAsync();
-       public Task<Response<string>> UpdateHabitNameAsync(int habitid , string newname);
+      public Task<Response<string>> UpdateHabitNameAsync(int habitid , string newname);
+
 }
