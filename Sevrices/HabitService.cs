@@ -91,7 +91,7 @@ public class HabitService(ApplicationDbContext dbContext) : IHabitService
           var count = await conn.ExecuteScalarAsync<int>(query);
         return count;
           }
-        public async  Task<Response<string>> UpdateHabitNameAsync(int habitid , string newname)
+     public async  Task<Response<string>> UpdateHabitNameAsync(int habitid , string newname)
      {
           try
           {

@@ -2,8 +2,7 @@ using System.Net;
 using Dapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
-
+using Npgsql;
 namespace WebTask.Services;
 public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
 {
@@ -13,7 +12,7 @@ public class HabitlogService(ApplicationDbContext dbContext) :  IHabitlogService
            try
        {
            using var conn =context.Connection();
-           var query="insert into habitlogs(habitId, isCompleted) values(@HabitId,@IsCompleted)";
+           var query="insert into habitlogs(habitid,isCompleted) values(@HabitId,@IsCompleted)";
             var res = await conn.ExecuteAsync(query ,new{habitid=habitlog.HabitId,isCompleted=habitlog.IsCompleted});
              return res==0
              ? new Response<string>(HttpStatusCode.InternalServerError,"Can not add habitlog")
